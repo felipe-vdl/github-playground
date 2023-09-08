@@ -1,0 +1,10 @@
+name: Example Workflow
+on: workflow_dispatch # Manual trigger
+jobs:
+  example-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Greetings
+        run: echo "Hi"
+      - name: Farewell
+        run: echo "Bye"
