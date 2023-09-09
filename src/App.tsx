@@ -59,10 +59,10 @@ export default function App() {
   return (
     <div className="bg-slate-800 min-h-screen bg-gradient-to-br from-rose-900/20 to-blue-900/10 flex flex-col">
       <header className="shadow-md flex justify-between px-20 text-white/90 bg-slate-400/10 py-3">
-        <h1 className="bg-clip-text text-transparent bg-gradient-to-br from-red-500 to-indigo-500 text-3xl font-bold tracking-wide">
+        <h1 role="brand-header" className="bg-clip-text text-transparent bg-gradient-to-br from-red-500 to-indigo-500 text-3xl font-bold tracking-wide">
           Drugs 4 You
         </h1>
-        <button onClick={handleClick} className="flex items-center gap-3 bg-indigo-500 p-2 rounded-full hover:bg-indigo-600 transition-all duration-200">
+        <button role="toggle-cart" onClick={handleClick} className="flex items-center gap-3 bg-indigo-500 p-2 rounded-full hover:bg-indigo-600 transition-all duration-200">
           <svg xmlns="http://www.w3.org/2000/svg" className="mx-1" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
             <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
           </svg> Your Cart <span className="bg-slate-800/60 p-1 rounded-full px-3">{cartProducts.length}</span>
@@ -92,7 +92,7 @@ export default function App() {
         </section>
         <section className="p-4 bg-slate-700/60 shadow rounded flex flex-col gap-4">
           {storeProducts.map(product =>
-            <div className="flex justify-between border-b border-white/20 py-4" key={product.id}>
+            <div className="flex justify-between border-b border-white/20 py-4" key={`${product.id}-${product.description.charAt(0)}`}>
               <div className="flex flex-col">
                 <p className="font-bold text-rose-400">{product.name}</p>
                 <p className="italic">{product.description}</p>
