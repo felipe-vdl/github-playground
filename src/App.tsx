@@ -45,14 +45,14 @@ export default function App() {
     });
   }
 
-  const handleSubmit = (evt: React.FormEvent<HTMLFormElement> & { target: { elements: any } }) => {
+  const handleSubmit = (evt: React.FormEvent<HTMLFormElement> & { target: { elements: { "id": { value: string }, "quantity": { value: string } } } }) => {
     evt.preventDefault();
-    if (!!evt.target.elements["quantity"].value) {
+    if (evt.target.elements["quantity"].value) {
       const productId = evt.target.elements["id"].value;
       const quantity = +evt.target.elements["quantity"].value;
       const product = storeProducts.find(p => p.id === +productId)!;
       handleAdd(product, quantity);
-      evt.target.elements["quantity"].value = 1;
+      evt.target.elements["quantity"].value = "1";
     }
   }
 
