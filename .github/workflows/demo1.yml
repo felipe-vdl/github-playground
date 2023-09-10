@@ -1,5 +1,14 @@
-name: Events Demo 1
-on: workflow_dispatch
+name: Event Filters & Activity Types
+on:
+  push:
+    branches: 2_events
+  
+  pull_request:
+    types: opened
+    branches: 2_events
+  
+  workflow_dispatch:
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
