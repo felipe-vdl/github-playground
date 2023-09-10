@@ -12,8 +12,4 @@ describe("<App /> Test Suite", () => {
     render(<App />);
     expect(screen.getByRole('brand-header')).toBeInTheDocument();
   });
-
-  it("should fail", () => {
-    expect(false).toBeTruthy();
-  });
 });
