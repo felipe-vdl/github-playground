@@ -28,7 +28,7 @@ jobs:
       - name: Build
         run: npm run build
       
-      - name: Upload Artifacts
+      - name: Upload Build
         uses: actions/upload-artifact@v3
         with:
           name: app-build
@@ -38,5 +38,13 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Download Build
+        uses: actions/download-artifact@v3
+        with:
+          name: app-build
+      
+      - name: List Contents
+        run: ls
+
       - name: Deploy
         run: echo "Deploying..."
