@@ -18,6 +18,8 @@ jobs:
   build:
     needs: test
     runs-on: ubuntu-latest
+    outputs:
+      script-file: ${{ steps.jobOutput.outputs.script-file }}
     steps:
       - name: Get code
         uses: actions/checkout@v3
@@ -28,6 +30,10 @@ jobs:
       - name: Build
         run: npm run build
       
+      - name: Create Output - JS filename
+        id: jobOutput
+        run: find dist/assets/*.js -type f -execdir echo 'script-file={}' >> $GITHUB_OUTPUT ';'
+
       - name: Upload Build
         uses: actions/upload-artifact@v3
         with:
@@ -45,6 +51,9 @@ jobs:
       
       - name: List Contents
         run: ls
+      
+      - name: Consume Output
+        run: echo "${{ needs.build.outputs.script-file }}"
 
       - name: Deploy
         run: echo "Deploying..."
