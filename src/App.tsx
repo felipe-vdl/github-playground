@@ -57,8 +57,8 @@ export default function App() {
   }
 
   return (
-    <div className="bg-slate-800 min-h-screen bg-gradient-to-br from-rose-900/20 to-blue-900/10 flex flex-col">
-      <header className="shadow-md flex justify-between px-20 text-white/90 bg-slate-400/10 py-3">
+    <div className="bg-slate-800 min-h-screen bg-gradient-to-br from-rose-900/20 to-blue-900/10 flex flex-col font-thin font-mono">
+      <header className="shadow-md flex items-center justify-between px-20 text-white/90 bg-slate-400/10 py-3">
         <h1 role="brand-header" className="bg-clip-text text-transparent bg-gradient-to-br from-red-500 to-indigo-500 text-3xl font-bold tracking-wide">
           Drugs 4 You
         </h1>
