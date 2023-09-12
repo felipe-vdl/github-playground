@@ -4,6 +4,10 @@ env:
   SECRET_MESSAGE: "This is a secret message."
 jobs:
   test:
+    environment: Example
+    env:
+      REPO_ENV_SECRET: ${{ secrets.REPO_ENV_SECRET }}
+      REPO_ENV_VARIABLE: ${{ vars.REPO_ENV_VARIABLE }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -23,6 +27,12 @@ jobs:
 
       - name: Test
         run: npm run test
+      
+      - name: Echo Repository Environment Variable
+        run: echo "${{ env.REPO_ENV_VARIABLE }}"
+
+      - name: Echo Repository Environment Secret
+        run: echo "${{ env.REPO_ENV_SECRET }}"
   
   build:
     needs: test
