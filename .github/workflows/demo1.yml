@@ -1,0 +1,81 @@
+name: Environment Variables and Secrets
+on: push
+env:
+  SECRET_MESSAGE: "This is a secret message."
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: node-deps-${{ hashFiles('package-lock.json') }}
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm run test
+  
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: node-deps-${{ hashFiles('**/package-lock.json') }}
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build project
+        run: npm run build
+
+      - name: Upload build
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-build
+          path: dist
+      
+      - name: Print Workflow Secret
+        run: echo $SECRET_MESSAGE
+  
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      SECRET_MESSAGE: "Overwritten secret at Job level."
+    steps:
+      - name: Download build
+        uses: actions/download-artifact@v3
+        with:
+          name: app-build
+
+      - name: Echo Job Env
+        run: |
+          echo "${{ env.SECRET_MESSAGE }}"
+          echo $SECRET_MESSAGE
+      
+      - name: Echo Step Env
+        env:
+          SECRET_MESSAGE: "Overwritten secret at Step level."
+        run: |
+          echo "${{ env.SECRET_MESSAGE }}"
+          echo $SECRET_MESSAGE
+      
+      - name: Deploy
+        run: |
+          ls
+          echo "Deploying..."
