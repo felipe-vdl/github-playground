@@ -57,6 +57,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SECRET_MESSAGE: "Overwritten secret at Job level."
+      SECRET_FROM_GITHUB: ${{ secrets.MY_GITHUB_SECRET }}
     steps:
       - name: Download build
         uses: actions/download-artifact@v3
@@ -74,6 +75,9 @@ jobs:
         run: |
           echo "${{ env.SECRET_MESSAGE }}"
           echo $SECRET_MESSAGE
+      
+      - name: Echo Secret
+        run: echo ${{ env.SECRET_FROM_GITHUB }}
       
       - name: Deploy
         run: |
