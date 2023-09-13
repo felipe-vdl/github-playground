@@ -7,6 +7,12 @@ jobs:
       matrix:
         node-version: [16, 18, 20]
         operating-system: [ubuntu-latest, windows-latest]
+        include:
+          - node-version: 17
+            operating-system: ubuntu-latest
+        exclude:
+          - node-version: 18
+            operating-system: windows-latest
 
     runs-on: ubuntu-latest
     steps:
