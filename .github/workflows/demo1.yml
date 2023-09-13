@@ -1,0 +1,79 @@
+name: Flow Control
+on:
+  push:
+    branches: 5_flow_control
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          key: node-deps-${{hashFiles('**/package-lock.json')}}
+          path: ~/.npm
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Lint code
+        run: npm run lint
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          key: node-deps-${{hashFiles('**/package-lock.json')}}
+          path: ~/.npm
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Test code
+        run: npm run test
+
+  build:
+    needs: [lint, test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          key: node-deps-${{hashFiles('**/package-lock.json')}}
+          path: ~/.npm
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build code
+        run: npm run build
+      
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-build
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: app-build
+
+      - name: Deploy Application
+        run: |
+          ls
+          echo "Deploying..."
