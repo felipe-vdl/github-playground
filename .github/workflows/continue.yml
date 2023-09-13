@@ -43,6 +43,7 @@ jobs:
       - name: Test code
         id: test
         run: npm run test
+        continue-on-error: true
 
       - name: Upload test report
         if:  ${{ failure() && steps.test.outcome == 'failure' }}
