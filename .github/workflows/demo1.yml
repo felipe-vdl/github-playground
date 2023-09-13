@@ -37,10 +37,19 @@ jobs:
         run: npm ci
       
       - name: Test code
+        id: test
         run: npm run test
+
+      - name: Upload test report
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          path: 'test.json'
+          name: test-report
 
   build:
     needs: [lint, test]
+    if: success()
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
