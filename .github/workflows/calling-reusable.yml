@@ -1,0 +1,8 @@
+name: Calling Reusable Workflow
+on: 
+  push:
+    branches: 5_flow_control
+jobs:
+  deploy:
+    uses: ./.github/workflows/reusable.yml
+    
