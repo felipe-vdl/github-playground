@@ -13,7 +13,7 @@ describe("<App /> Test Suite", () => {
     expect(screen.getByRole('brand-header')).toBeInTheDocument();
   });
 
-  it("should break", () => {
-    expect(true).toBeFalsy();
-  });
+  // it("should break", () => {
+  //   expect(true).toBeFalsy();
+  // });
 });
