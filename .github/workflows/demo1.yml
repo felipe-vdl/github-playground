@@ -1,4 +1,4 @@
-name: Flow Control
+name: Flow Control - Standard
 on:
   push:
     branches: 5_flow_control

@@ -1,4 +1,4 @@
-name: Matrix Demo
+name: Matrix Strategies Demo
 on: push
 jobs:
   build:
