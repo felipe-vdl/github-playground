@@ -3,6 +3,42 @@ on:
   push:
     branches: 5_flow_control
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+    
+      - name: Cache dependencies
+        id: node-modules-cache
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: node-deps-${{ hashFiles('**/package-lock.json') }}
+      
+      - name: Install dependencies
+        if: ${{ steps.node-modules-cache.outputs.cache-hit != 'true' }}
+        run: npm ci
+      
+      - name: Build project
+        run: npm run build
+      
+      - name: Upload dist
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-build
+          path: dist
+
   deploy:
     uses: ./.github/workflows/reusable.yml
-    
+    with:
+      artifact-name: app-build
+    # secrets:
+    #   some-secret: ${{ secrets.SOME_SECRET }}
+  
+  message:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print output
+        run: echo "${{ needs.deploy.outputs.message }}"

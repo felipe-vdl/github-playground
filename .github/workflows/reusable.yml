@@ -1,8 +1,37 @@
 name: Reusable Workflow
-on: workflow_call
+on:
+  workflow_call:
+    inputs:
+      artifact-name:
+        type: string
+        default: dist
+        description: The name of the deployable artifact files
+        required: true
+    # secrets:
+    #   message:
+    #     description: Secret Message
+    #     required: true
+    outputs:
+      message:
+        description: 
+        value: ${{ jobs.deploy.outputs.message }}
 jobs:
   deploy:
+    outputs:
+      message: ${{ steps.messenger.outputs.message }}
     runs-on: ubuntu-latest
     steps:
-      - name: Output Info
-        run: echo "Deploying..."
+      - name: Download dist
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ inputs.artifact-name }}
+          path: dist
+        
+      - name: Output Message
+        id: messenger
+        run: echo "message='Hi, bye.'" >> $GITHUB_OUTPUT
+        
+      - name: Deploy
+        run: |
+          echo "Deploying..."
+          ls
