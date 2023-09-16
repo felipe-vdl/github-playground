@@ -7,6 +7,14 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: node:18
+
+    # services:
+    #   mongodb:
+    #     image: mongo
+    #     env:
+    #       MONGO_INITDB_ROOT_USERNAME: root
+    #       MONGO_INITDB_ROOT_PASSWORD: example
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
