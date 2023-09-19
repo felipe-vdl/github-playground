@@ -9,16 +9,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
       
-      - name: Cache dependencies
-        id: cache
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: node_modules_${{hashFiles('**/package-lock.json')}}
-      
-      - name: Install dependencies
-        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
-        run: npm ci
+      - name: Load & Cache dependencies
+        uses: ./.github/actions/cached-deps
 
       - name: Lint project
         run: npm run lint
@@ -29,16 +21,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
       
-      - name: Cache dependencies
-        id: cache
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: node_modules_${{hashFiles('**/package-lock.json')}}
-      
-      - name: Install dependencies
-        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
-        run: npm ci
+      - name: Load & Cache dependencies
+        uses: ./.github/actions/cached-deps
 
       - name: Test project
         id: test
@@ -58,16 +42,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
       
-      - name: Cache dependencies
-        id: cache
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: node_modules_${{ hashFiles('**/package-lock.json') }}
-      
-      - name: Install dependencies
-        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
-        run: npm ci
+      - name: Load & Cache dependencies
+        uses: ./.github/actions/cached-deps
 
       - name: Build project
         id: test
