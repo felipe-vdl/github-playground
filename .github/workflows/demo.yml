@@ -1,0 +1,95 @@
+name: Custom Actions
+on: 
+  push:
+    branches: 7_custom_actions
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: node_modules_${{hashFiles('**/package-lock.json')}}
+      
+      - name: Install dependencies
+        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+        run: npm ci
+
+      - name: Lint project
+        run: npm run lint
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: node_modules_${{hashFiles('**/package-lock.json')}}
+      
+      - name: Install dependencies
+        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+        run: npm ci
+
+      - name: Test project
+        id: test
+        run: npm test
+      
+      - name: Upload reports
+        if: ${{ failure() && steps.test.outcome == 'failure' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: test-report.json
+
+  build:
+    needs: [lint, test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: node_modules_${{ hashFiles('**/package-lock.json') }}
+      
+      - name: Install dependencies
+        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+        run: npm ci
+
+      - name: Build project
+        id: test
+        run: npm run build
+      
+      - name: Upload build
+        uses: actions/upload-artifact@v3
+        with:
+          name: project-build
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build
+        uses: actions/download-artifact@v3
+        with:
+          name: project-build
+          path: dist
+
+      - name: Deploy project
+        run: |
+          ls
+          echo "Deploying..."
