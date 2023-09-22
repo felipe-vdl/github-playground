@@ -1,5 +1,16 @@
 name: 'Docker Action Demo'
 description: 'Using Docker Custom Actions'
+
+inputs:
+  message:
+    description: 'Some message input'
+    default: 'default message'
+    required: true
+
+outputs:
+  greetings:
+    description: 'Some greet'
+
 runs:
   using: 'docker'
   image: 'Dockerfile'
