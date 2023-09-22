@@ -1,6 +1,6 @@
 const core = require('@actions/core');
-// const github = require('@actions/github');
-// const exec = require('@actions/exec');
+const github = require('@actions/github');
+const exec = require('@actions/exec');
 
 console.log('Hello from Node 20!');
 console.log(process.env.INPUT_MESSAGE);
