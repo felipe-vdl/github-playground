@@ -25,7 +25,7 @@ jobs:
         uses: ./.github/actions/cached-deps
         id: cache
         with:
-          caching: true
+          caching: false
           message: 'Hello from the workflow user!'
 
       - name: Test project
