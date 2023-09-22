@@ -1,10 +1,21 @@
 name: 'Get & Cache Node Dependencies'
 description: 'Get the dependencies (via npm) and cache them.'
+inputs:
+  caching:
+    default: 'true'
+    description: 'Whether dependencies should be cached.'
+  message:
+    description: ''
+outputs:
+  something:
+    description: 'Testing outputs'
+    value: ${{ steps.outputter.outputs.something }}
 runs:
   using: composite
   steps:
     - name: Cache dependencies
       id: cache
+      if: ${{ inputs.caching == 'true' }}
       uses: actions/cache@v3
       with:
         path: node_modules
@@ -13,4 +24,13 @@ runs:
     - name: Install dependencies
       if: ${{ steps.cache.outputs.cache-hit != 'true' }}
       run: npm ci
+      shell: bash
+
+    - name: Print input
+      run: echo '${{ inputs.message }}'
+      shell: bash
+    
+    - name: Outputter
+      id: outputter
+      run: echo "something=Hello from the Outputter" >> "$GITHUB_OUPUT"
       shell: bash

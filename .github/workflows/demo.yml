@@ -23,6 +23,10 @@ jobs:
       
       - name: Load & Cache dependencies
         uses: ./.github/actions/cached-deps
+        id: cache
+        with:
+          caching: true
+          message: 'Hello from the workflow user!'
 
       - name: Test project
         id: test
@@ -34,6 +38,9 @@ jobs:
         with:
           name: test-report
           path: test-report.json
+      
+      - name: Print C.A. output
+        run: echo '${{ steps.cache.outputs.something }}'
 
   build:
     needs: [lint, test]
