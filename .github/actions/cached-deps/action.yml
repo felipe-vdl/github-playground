@@ -5,7 +5,8 @@ inputs:
     default: 'true'
     description: 'Whether dependencies should be cached.'
   message:
-    description: ''
+    description: 'Some message'
+    default: 'placeholder msg'
 outputs:
   something:
     description: 'Testing outputs'
@@ -27,7 +28,7 @@ runs:
       shell: bash
 
     - name: Print input
-      run: echo "$INPUT_MESSAGE"
+      run: echo "${{ inputs.message }}"
       shell: bash
     
     - name: Outputter
