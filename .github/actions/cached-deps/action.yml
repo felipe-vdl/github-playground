@@ -27,11 +27,11 @@ runs:
       run: npm ci
       shell: bash
 
-    - name: Print input
+    - name: Print input message
       run: echo "${{ inputs.message }}"
       shell: bash
     
-    - name: Outputter
+    - name: Assign Output value
       id: outputter
       run: echo "something=Hello from Output" >> $GITHUB_OUTPUT
       shell: bash
