@@ -1,0 +1,16 @@
+name: 'JavaScript Action Example'
+description: 'A JavaScript Custom Action demo'
+
+inputs:
+  message:
+    description: 'Some message input'
+    default: 'default message'
+    required: true
+
+outputs:
+  greetings:
+    description: 'Some greet'
+
+runs:
+  using: node20
+  main: main.js

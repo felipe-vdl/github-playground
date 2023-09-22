@@ -1,4 +1,4 @@
-name: 'Get & Cache Node Dependencies'
+name: 'Get & Cache Node Dependencies - Composite Action Example'
 description: 'Get the dependencies (via npm) and cache them.'
 inputs:
   caching:
