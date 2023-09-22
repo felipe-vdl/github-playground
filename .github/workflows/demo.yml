@@ -45,6 +45,8 @@ jobs:
       - name: Testing JavaScript Action
         id: js-action
         uses: ./.github/actions/javascript-action
+        env:
+          SECRET: ${{ secrets.MY_GITHUB_SECRET }}
         with:
           message: 'Hello from the Workflow Input'
       

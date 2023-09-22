@@ -29,3 +29,5 @@ console.log(github.context);
 
 // We can also use the github.octoKit() to communicate with GitHub APIs.
 // github.getOctokit()
+
+console.log(process.env.SECRET);
