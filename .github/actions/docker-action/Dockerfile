@@ -8,4 +8,4 @@ COPY package.json /app
 RUN npm install
 
 COPY . /app
-CMD [ "/entrypoint.sh" ]
+CMD [ "/bin/sh", "/entrypoint.sh" ]
