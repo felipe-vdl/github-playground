@@ -43,9 +43,13 @@ jobs:
         run: echo '${{ steps.cache.outputs.something }}'
       
       - name: Testing JavaScript Action
+        id: js-action
         uses: ./.github/actions/javascript-action
         with:
           message: 'Hello from the Workflow Input'
+      
+      - name: Print JS C.A. Output
+        run: echo '${{ steps.js-action.outputs.greetings }}'
 
   build:
     needs: [lint, test]
