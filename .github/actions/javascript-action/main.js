@@ -1,5 +1,7 @@
+const core = require('@actions/core');
+
 console.log('Hello from Node 20!');
 
 console.log(process.env.INPUT_MESSAGE);
 
-console.log(process.env.GITHUB_OUTPUT);
+core.setOutput('greetings', 'Greetings from the Output!!');
