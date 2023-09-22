@@ -1,7 +1,11 @@
 FROM node:20
 
-COPY package.json .
+COPY entrypoint.sh /entrypoint.sh
+
+WORKDIR /app
+
+COPY package.json /app
 RUN npm install
 
-COPY . .
-CMD [ "node", "main.js" ]
+COPY . /app
+CMD [ "/entrypoint.sh" ]
