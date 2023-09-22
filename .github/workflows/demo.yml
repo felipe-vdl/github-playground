@@ -10,7 +10,7 @@ jobs:
         uses: actions/checkout@v3
       
       - name: Load & Cache dependencies
-        uses: ./.github/actions/cache-composite-actions
+        uses: ./.github/actions/cache-composite-action
 
       - name: Lint project
         run: npm run lint
@@ -55,7 +55,7 @@ jobs:
         uses: actions/checkout@v3
       
       - name: Load & Cache dependencies
-        uses: ./.github/actions/cache-composite-actions
+        uses: ./.github/actions/cache-composite-action
 
       - name: Build project
         id: test
