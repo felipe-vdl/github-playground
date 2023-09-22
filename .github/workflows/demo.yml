@@ -49,9 +49,20 @@ jobs:
           SECRET: ${{ secrets.MY_GITHUB_SECRET }}
         with:
           message: 'Hello from the Workflow Input'
-      
+          
       - name: Print JS C.A. Output
         run: echo '${{ steps.js-action.outputs.greetings }}'
+
+      - name: Testing Docker Action
+        id: docker-action
+        uses: ./.github/actions/docker-action
+        env:
+          SECRET: ${{ secrets.MY_GITHUB_SECRET }}
+        with:
+          message: 'Hello from the Workflow Input'
+      
+      - name: Print Docker C.A. Output
+        run: echo '${{ steps.docker-action.outputs.greetings }}'
 
   build:
     needs: [lint, test]
