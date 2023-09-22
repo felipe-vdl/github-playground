@@ -3,5 +3,16 @@ import core from "@actions/core"
 //const exec = require('@actions/exec');
 
 console.log('Hello from Node 20!');
-console.log(process.env.INPUT_MESSAGE);
+
+// Getting Inputs
+  // Using env
+  console.log(process.env.INPUT_MESSAGE);
+
+  // Using core
+  const message = core.getInput('message', {
+    required: true,
+  });
+  console.log(message);
+
+// Setting Outputs
 core.setOutput('greetings', 'Greetings from the Output!!');
