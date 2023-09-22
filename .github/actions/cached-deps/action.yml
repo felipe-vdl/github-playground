@@ -27,7 +27,7 @@ runs:
       shell: bash
 
     - name: Print input
-      run: echo $INPUT_MESSAGE
+      run: echo "$INPUT_MESSAGE"
       shell: bash
     
     - name: Outputter
