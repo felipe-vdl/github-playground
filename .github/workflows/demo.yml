@@ -1,0 +1,70 @@
+name: Security Concerns and Permissions
+on:
+  push:
+    branches: 8_security_and_permissions
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Install & Cache Dependencies
+        uses: ./.github/actions/cache-node-deps
+      
+      - name: Lint project
+        run: npm run lint
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Install & Cache Dependencies
+        uses: ./.github/actions/cache-node-deps
+      
+      - name: Test project
+        id: test
+        run: npm test
+      
+      - name: Upload report
+        if: failure() && steps.test.outcome == 'failure'
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: test-report.json
+
+  build:
+    needs: [lint, test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Install & Cache Dependencies
+        uses: ./.github/actions/cache-node-deps
+      
+      - name: Build project
+        run: npm run build
+      
+      - name: Upload build
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-build
+          path: dist
+
+  deploy:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build
+        uses: actions/download-artifact@v3
+        with:
+          name: app-build
+          path: dist
+      
+      - name: Deploy
+        run: |
+          ls
+          echo 'Deploying...'
